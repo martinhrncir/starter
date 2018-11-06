@@ -17,7 +17,7 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: ['babel-loader', 'awesome-typescript-loader'],
+        use: ['awesome-typescript-loader'],
       },
       {
         test: /\.css$/,
@@ -44,10 +44,6 @@ module.exports = {
     new CheckerPlugin(),
     new HtmlWebpackPlugin({template: 'index.html.ejs',}),
   ],
-  externals: {
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-  },
   performance: {
     hints: false,
   },

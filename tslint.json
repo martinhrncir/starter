@@ -22,10 +22,6 @@
             true,
             "double"
         ],
-        "semicolon": [
-            true,
-            "always"
-        ],
         "triple-equals": [
             true,
             "allow-null-check"
@@ -68,7 +64,7 @@
             "double"
         ],
         "semicolon": [
-            true,
+            false,
             "always"
         ],
         "triple-equals": [
@@ -89,13 +85,13 @@
             true,
             "ban-keywords"
         ],
-        "whitespace": [
-            true,
-            "check-branch",
-            "check-decl",
-            "check-operator",
-            "check-separator",
-            "check-type"
-        ]
+        // "whitespace": [
+        //     true,
+        //     "check-branch",
+        //     "check-decl",
+        //     "check-operator",
+        //     "check-separator",
+        //     "check-type"
+        // ]
     }
 }
