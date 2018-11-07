@@ -1,6 +1,4 @@
 import * as React from "react"
-import Chyba from "./Chyba"
-import Vysledek from "./Vysledek"
 
 interface Props {
     delenec: number
@@ -27,11 +25,10 @@ class Delic extends React.PureComponent<Props,State> {
 
     render() {
         const { vysledek, nejde } = this.state
-        const {delenec, delitel} = this.props
         if(nejde) {
-            return <Chyba>Co mi to děláš?</Chyba>
+            return <span>Co mi to děláš?</span>
         }
-        return <Vysledek delenec={delenec} delitel={delitel} vysledek={vysledek} /> 	
+        return <span>Som podelil a vyslo mi  {vysledek}</span>
      }
 }
 

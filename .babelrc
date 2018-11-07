@@ -4,6 +4,19 @@
     "@babel/preset-react"
   ],
   "plugins": [
+        [
+      "transform-imports",
+      {
+        "@reglendo/mergado-ui-kit": {
+          "transform": "@reglendo/mergado-ui-kit/lib/components/${member}",
+          "preventFullImport": true
+        },
+        "@reglendo/mergado-ui-icons": {
+          "transform": "@reglendo/mergado-ui-icons/lib/icons/${member}",
+          "preventFullImport": true
+        }
+      }
+    ],
     "react-hot-loader/babel"
   ],
   "env": {

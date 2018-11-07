@@ -17,7 +17,12 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: ['awesome-typescript-loader'],
+          exclude: /node_modules/,
+          use: [{
+              loader: 'babel-loader?cacheDirectory',
+          }, {
+              loader: 'awesome-typescript-loader',
+          }]
       },
       {
         test: /\.css$/,
