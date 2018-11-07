@@ -12,7 +12,7 @@ interface State {
     cantDo: boolean
 }
 
-class Delic extends React.PureComponent<Props,State> {
+class Divider extends React.PureComponent<Props,State> {
 
     constructor(props) {
         super(props)
@@ -35,4 +35,4 @@ class Delic extends React.PureComponent<Props,State> {
      }
 }
 
-export default Delic
+export default Divider
