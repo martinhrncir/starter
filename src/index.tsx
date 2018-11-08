@@ -2,12 +2,16 @@ import * as React from "react"
 import {render} from "react-dom"
 import {AppContainer} from "react-hot-loader"
 import App from "./components/App"
+import {Provider} from "react-redux"
+import store from "./components/Chapter7/store"
 
 const rootEl = document.getElementById("app")
 
 render(
     <AppContainer>
+        <Provider store={store}>
         <App/>
+        </Provider>
     </AppContainer>,
     rootEl
 );

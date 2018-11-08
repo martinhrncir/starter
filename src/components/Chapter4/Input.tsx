@@ -35,5 +35,3 @@ export default class Input extends React.Component<Props, State> {
     }
 }
 
-
-

@@ -8,66 +8,39 @@ import {
     Button,
     Section,
 } from "@reglendo/mergado-ui-kit"
+import {connect} from "react-redux"
 import ThemeProvider from "@reglendo/cxs/ThemeProvider"
+import Item from "../Chapter4/Item"
+import Input from "../Chapter5/Input"
 import {
-    IconClose, IconCheck,
-} from "@reglendo/mergado-ui-icons"
-import Item from "./Item"
-import Input from "./Input"
+    addItem,
+    setItemDone,
+    removeItem,
+    removeDoneItem,
+    changeFormValue,
+} from "./reducers"
+
 interface Props {
-}
-
-interface State {
     items: string[]
-    value: string
     done: string[]
+    addItem: (e) => any
+    setItemDone: (e) => any
+    removeItem: (e) => any
+    removeDoneItem: (e) => any
+    changeFormValue: (e) => any
+    form: string
 }
 
-export default class App extends React.Component<Props, State> {
-    state = {
-        items: [],
-        value: '',
-        done: [],
-    }
 
-    addItem = e => this.setState(s => ({
-                        items: [...s.items, this.state.value ]
-                    }))
+class App extends React.Component<Props, {}> {
 
-    getValue = val => {
-        this.setState({
-            value: val,
-        })
-    }
+    addItem = e => this.props.addItem(this.props.form)
+    removeItem = e => this.props.removeItem(this.props.form)
+    removeDone = e => this.props.removeDoneItem(this.props.form)
+    setItemDone = e => this.props.setItemDone(this.props.form)
 
-    removeItem = e => {
-         this.setState(s => {
-                        const index = s.items.indexOf(e)
-                        const items = [...s.items]
-                        items.splice(index,1)
-                        return ({
-                            items,
-                        })})
-    }
-
-    removeDone = e => {
-         this.setState(s => {
-                        const index = s.done.indexOf(e)
-                        const done = [...s.done]
-                        done.splice(index,1)
-                        return ({
-                            done,
-                        })})
-    }
-
-    setItemDone = e => {
-        this.setState(s => ({
-                        done: [...s.done, this.state.value ]
-                    }))
-        this.removeItem(e)
-    }
     render() {
-        const { items, done } = this.state
+        const { items, done } = this.props
         return (
             <A>
                 <ThemeProvider theme={Theme}>
@@ -75,7 +48,7 @@ export default class App extends React.Component<Props, State> {
                     <Section >
                         <Grid cols="1fr auto" valign="end" gap="10px">
                             <GridCell>
-                                <Input label={"Do:"} id="input" getValue={this.getValue} />
+                                <Input label={"Do:"} />
                             </GridCell>
                             <GridCell valign="end">
                                 <Button size="small" tabIndex="1" onClick={this.addItem}>Add</Button>
@@ -117,3 +90,15 @@ const AppStyles = css("div")({
 })
 
 
+
+export default connect((state,props) => ({
+    items: state.items,
+    done: state.done,
+    form: state.form,
+}), {
+    addItem,
+    setItemDone,
+    removeItem,
+    removeDoneItem,
+    changeFormValue,
+})(App)

@@ -8,74 +8,54 @@ import {
     Button,
     Section,
 } from "@reglendo/mergado-ui-kit"
+import {connect} from "react-redux"
 import ThemeProvider from "@reglendo/cxs/ThemeProvider"
+import Item from "../Chapter4/Item"
+import Input from "../Chapter5/Input"
+
 import {
-    IconClose, IconCheck,
-} from "@reglendo/mergado-ui-icons"
-import Item from "./Item"
-import Input from "./Input"
+    addItem,
+    setItemDone,
+    removeItem,
+    removeDoneItem,
+    changeFormValue,
+    getMergadoFormats,
+} from "../Chapter7/reducers"
+
 interface Props {
-}
-
-interface State {
     items: string[]
-    value: string
     done: string[]
+    addItem: (e) => any
+    setItemDone: (e) => any
+    removeItem: (e) => any
+    removeDoneItem: (e) => any
+    changeFormValue: (e) => any
+    getMergadoFormats: () => any
+    form: string
 }
 
-export default class App extends React.Component<Props, State> {
-    state = {
-        items: [],
-        value: '',
-        done: [],
-    }
 
-    addItem = e => this.setState(s => ({
-                        items: [...s.items, this.state.value ]
-                    }))
+class App extends React.Component<Props, {}> {
 
-    getValue = val => {
-        this.setState({
-            value: val,
-        })
-    }
+    addItem = e => this.props.addItem(this.props.form)
+    removeItem = e => this.props.removeItem(e)
+    removeDone = e => this.props.removeDoneItem(e)
+    setItemDone = e => this.props.setItemDone(e)
 
-    removeItem = e => {
-         this.setState(s => {
-                        const index = s.items.indexOf(e)
-                        const items = [...s.items]
-                        items.splice(index,1)
-                        return ({
-                            items,
-                        })})
-    }
+    getMergadoFormats = () => this.props.getMergadoFormats()
 
-    removeDone = e => {
-         this.setState(s => {
-                        const index = s.done.indexOf(e)
-                        const done = [...s.done]
-                        done.splice(index,1)
-                        return ({
-                            done,
-                        })})
-    }
-
-    setItemDone = e => {
-        this.setState(s => ({
-                        done: [...s.done, this.state.value ]
-                    }))
-        this.removeItem(e)
-    }
     render() {
-        const { items, done } = this.state
+        const { items, done } = this.props
         return (
             <A>
                 <ThemeProvider theme={Theme}>
                     <AppStyles className="app">
+                    <Button onClick={this.getMergadoFormats}>Get Mergado formats</Button>
+                    <br/><br/>
                     <Section >
                         <Grid cols="1fr auto" valign="end" gap="10px">
                             <GridCell>
-                                <Input label={"Do:"} id="input" getValue={this.getValue} />
+                                <Input label={"Do:"} />
                             </GridCell>
                             <GridCell valign="end">
                                 <Button size="small" tabIndex="1" onClick={this.addItem}>Add</Button>
@@ -86,7 +66,7 @@ export default class App extends React.Component<Props, State> {
                     <Section>
                                 <h5>To do:</h5>
                                 <ol>
-                                {items.map(o =>  <Item removeItem={this.removeItem} setItemDone={this.setItemDone}>{o}</Item>)}
+                                {items.map(o =>  <Item removeItem={(e) => this.removeItem(o)} setItemDone={(e) => this.setItemDone(o)}>{o}</Item>)}
                                 </ol>
                     </Section>
                     : <Section style={{textAlign: "center"}}>
@@ -98,7 +78,7 @@ export default class App extends React.Component<Props, State> {
                     <Section>
                                 <h5>Done:</h5>
                                 <ol>
-                                {done.map(o =>  <Item done={true} removeItem={this.removeDone}>{o}</Item>)}
+                                {done.map(o =>  <Item done={true} removeItem={e => this.removeDone(o)}>{o}</Item>)}
                                 </ol>
                     </Section>
                     }
@@ -117,3 +97,16 @@ const AppStyles = css("div")({
 })
 
 
+
+export default connect((state,props) => ({
+    items: state.items,
+    done: state.done,
+    form: state.form,
+}), {
+    addItem,
+    setItemDone,
+    removeItem,
+    removeDoneItem,
+    changeFormValue,
+    getMergadoFormats,
+})(App)
